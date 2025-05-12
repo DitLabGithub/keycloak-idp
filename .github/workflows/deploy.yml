@@ -1,0 +1,61 @@
+name: 🚀 Deploy Keycloak to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🔐 Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }} # Gebruik de GitHub Secret voor de private key
+
+      - name: 📁 Create Keycloak directory on VPS if not exists
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
+            mkdir -p /home/${{ secrets.VPS_USER }}/keycloak
+          EOF
+
+      - name: 📤 Copy docker-compose.yml to VPS
+        run: |
+          scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/docker-compose.yml
+
+      # - name: 📝 Create and copy .env file to VPS
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
+      #       echo '${{ secrets.ENV_FILE }}' > /home/${{ secrets.VPS_USER }}/keycloak/.env
+      #     EOF
+
+      - name: 🌐 Check and create external network 'web' on VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
+            # Controleer of het netwerk 'web' al bestaat
+            if ! docker network ls --filter name=web --format '{{.Name}}' | grep '^web$'; then
+              echo "Network 'web' does not exist. Creating..."
+              docker network create --driver overlay --attachable web
+            else
+              echo "Network 'web' already exists."
+            fi
+          EOF
+
+      - name: 🐳 Deploy to Docker Swarm
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
+           cd /home/${{ secrets.VPS_USER }}/keycloak
+            set -a; . ./.env; set +a
+            docker stack deploy -c docker-compose.yml ${{ secrets.STACK_NAME }}
+          EOF
+
+      - name: 🧹 Opruimen op de VPS na deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_edbla_github ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            rm -rf /home/${USER}/keycloak/
+          EOF
