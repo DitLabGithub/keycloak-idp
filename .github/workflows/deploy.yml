@@ -50,12 +50,11 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
            cd /home/${{ secrets.VPS_USER }}/keycloak
-            # set -a; . ./.env; set +a
             docker stack deploy -c docker-compose.yml ${{ secrets.STACK_NAME }}
           EOF
 
-      - name: 🧹 Opruimen op de VPS na deploy
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_edbla_github ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            rm -rf /home/${USER}/keycloak/
-          EOF
+      # - name: 🧹 Opruimen op de VPS na deploy
+      #   run: |
+      #     ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_edbla_github ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+      #       rm -rf /home/${USER}/keycloak/
+      #     EOF
