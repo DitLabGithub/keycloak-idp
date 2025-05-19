@@ -1,5 +1,5 @@
 services:
-  postgres:
+  postgres-idp:
     image: postgres:17
     environment:
       POSTGRES_DB: keycloak
@@ -19,7 +19,7 @@ services:
       - ./realm.json:/opt/keycloak/data/import/realm-export.json
     environment:
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_URL: jdbc:postgresql://postgres-idp:5432/keycloak
       KC_DB_USERNAME: dbuseridp
       KC_DB_PASSWORD: dbuserpass
       KC_HOSTNAME: keycloak.ditlab.cloud
@@ -33,7 +33,7 @@ services:
       # KC_HOSTNAME_STRICT: "false"
       # KC_HOSTNAME_STRICT_HTTPS: "false"
     depends_on:
-      - postgres
+      - postgres-idp
     secrets:
       - dbuser
       - dbpass
