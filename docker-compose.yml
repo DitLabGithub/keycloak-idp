@@ -1,42 +1,48 @@
 services:
   postgres:
     image: postgres:17
-    container_name: keycloak_postgres
     environment:
       POSTGRES_DB: keycloak
-      POSTGRES_USER_FILE: /run/secrets/postgres_user
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER_FILE: /run/secrets/dbuser
+      POSTGRES_PASSWORD_FILE: /run/secrets/dbpass
     volumes:
       - postgres_data:/var/lib/postgresql/data
     secrets:
-      - postgres_user
-      - postgres_password
+      - dbuser
+      - dbpass
     networks:
       - web
 
   keycloak:
     image: quay.io/keycloak/keycloak:latest
-    container_name: keycloak
+    volumes:
+      - ./realm.json:/opt/keycloak/data/import/realm-export.json
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
-      KC_DB_USERNAME_FILE: /run/secrets/keycloak_db_user
-      KC_DB_PASSWORD_FILE: /run/secrets/keycloak_db_pass
+      KC_DB_USERNAME: dbuseridp
+      KC_DB_PASSWORD: dbuserpass
       KC_HOSTNAME: keycloak.ditlab.cloud
       KC_PROXY: edge
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD_FILE: /run/secrets/keycloak_admin_password
-      KC_HTTP_ENABLED: "true"
-      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      # KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      # KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      # KC_BOOTSTRAP_ADMIN_PASSWORD_FILE: /run/secrets/kcpass
+      # KC_HTTP_ENABLED: "true"
+      # KC_HOSTNAME_STRICT: "false"
+      # KC_HOSTNAME_STRICT_HTTPS: "false"
     depends_on:
       - postgres
     secrets:
-      - keycloak_db_user
-      - keycloak_db_pass
-      - keycloak_admin_password
+      - dbuser
+      - dbpass
+      - kcpass
     networks:
       - web
-    command: start --optimized
+    command: start --import-realm
+    ports:
+      - 8080:8080
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
@@ -52,13 +58,9 @@ volumes:
   postgres_data:
 
 secrets:
-  postgres_user:
+  dbuser:
     external: true
-  postgres_password:
+  dbpass:
     external: true
-  keycloak_db_user:
-    external: true
-  keycloak_db_pass:
-    external: true
-  keycloak_admin_password:
+  kcpass:
     external: true
