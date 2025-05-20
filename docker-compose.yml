@@ -23,6 +23,7 @@ services:
       KC_DB_USERNAME: ${DB_USER}
       KC_DB_PASSWORD: ${DB_PASS}
       KC_HOSTNAME: keycloak.ditlab.cloud
+      KC_HOSTNAME_ADMIN: keycloak.ditlab.cloud
       KC_PROXY: edge
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -37,7 +38,6 @@ services:
       - kcpass
     networks:
       - web
-    command: start-dev --import-realm
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
@@ -47,7 +47,7 @@ services:
       - "traefik.http.routers.keycloak-redirect.rule=Host(`keycloak.ditlab.cloud`)"
       - "traefik.http.routers.keycloak-redirect.entrypoints=web"
       - "traefik.http.routers.keycloak-redirect.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
 
 networks:
