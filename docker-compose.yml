@@ -26,9 +26,6 @@ services:
       KC_PROXY: edge
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      # KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      # KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-      # KC_BOOTSTRAP_ADMIN_PASSWORD_FILE: /run/secrets/kcpass
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
@@ -41,13 +38,11 @@ services:
     networks:
       - web
     command: start --import-realm
-    # ports:
-    #   - 8080:8080
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
       - "traefik.http.routers.keycloak.entrypoints=websecure"
-      - "traefik.http.routers.keycloak.tls=true"
+      - "traefik.http.routers.keycloak.tls.certresolver=letsencrypt"
       - "traefik.http.routers.keycloak-redirect.rule=Host(`keycloak.ditlab.cloud`)"
       - "traefik.http.routers.keycloak-redirect.entrypoints=web"
       - "traefik.http.routers.keycloak-redirect.middlewares=redirect-to-https"
