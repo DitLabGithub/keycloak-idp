@@ -50,7 +50,7 @@ jobs:
       - name: 🐳 Deploy to Docker Swarm
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
-           cd /home/${{ secrets.VPS_USER }}/traefik
+           cd /home/${{ secrets.VPS_USER }}/keycloak
             set -a; . ./.env; set +a
             docker stack deploy -c docker-compose.yml ${{ secrets.STACK_NAME }}
           EOF
