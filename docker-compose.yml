@@ -48,6 +48,10 @@ services:
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
       - "traefik.http.routers.keycloak.entrypoints=websecure"
       - "traefik.http.routers.keycloak.tls=true"
+      - "traefik.http.routers.keycloak-redirect.rule=Host(`keycloak.ditlab.cloud`)"
+      - "traefik.http.routers.keycloak-redirect.entrypoints=web"
+      - "traefik.http.routers.keycloak-redirect.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
 
 networks:
