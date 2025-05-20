@@ -20,8 +20,8 @@ services:
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres-idp:5432/keycloak
-      KC_DB_USERNAME: dbuseridp
-      KC_DB_PASSWORD: dbuserpass
+      KC_DB_USERNAME: ${DB_USER}
+      KC_DB_PASSWORD: ${DB_PASS}
       KC_HOSTNAME: keycloak.ditlab.cloud
       KC_PROXY: edge
       KEYCLOAK_ADMIN: admin
