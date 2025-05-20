@@ -37,7 +37,7 @@ services:
       - kcpass
     networks:
       - web
-    command: start --import-realm
+    command: start --optimized --import-realm
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
