@@ -29,6 +29,8 @@ services:
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HTTP_RELATIVE_PATH: /admin
+      KC_HOSTNAME_PATH: /admin
     depends_on:
       - postgres-idp
     secrets:
@@ -37,7 +39,7 @@ services:
       - kcpass
     networks:
       - web
-    command: start --optimized --import-realm
+    command: start --import-realm
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
