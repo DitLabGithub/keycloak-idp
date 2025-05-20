@@ -29,9 +29,6 @@ services:
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
-    ports:
-      - "18080:8080"
-      - "18443:8443"
     depends_on:
       - postgres-idp
     secrets:
@@ -46,6 +43,7 @@ services:
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
       - "traefik.http.routers.keycloak.entrypoints=websecure"
       - "traefik.http.routers.keycloak.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.keycloak.tls=true"
       - "traefik.http.routers.keycloak-redirect.rule=Host(`keycloak.ditlab.cloud`)"
       - "traefik.http.routers.keycloak-redirect.entrypoints=web"
       - "traefik.http.routers.keycloak-redirect.middlewares=redirect-to-https"
