@@ -29,6 +29,9 @@ services:
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
+    ports:
+      - "18080:8080"
+      - "18443:8443"
     depends_on:
       - postgres-idp
     secrets:
