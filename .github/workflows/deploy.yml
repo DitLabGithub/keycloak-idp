@@ -24,16 +24,16 @@ jobs:
             mkdir -p /home/${{ secrets.VPS_USER }}/keycloak
           EOF
 
-      - name: 📤 Copy docker-compose.yml to VPS
+      - name: 📤 Copy docker-compose.yml and realm.json to VPS
         run: |
           scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/docker-compose.yml
           scp -o StrictHostKeyChecking=no realm.json ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/realm.json
 
-      # - name: 📝 Create and copy .env file to VPS
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
-      #       echo '${{ secrets.ENV_FILE }}' > /home/${{ secrets.VPS_USER }}/keycloak/.env
-      #     EOF
+      - name: 📝 Create and copy .env file to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
+            echo '${{ secrets.ENV_FILE }}' > /home/${{ secrets.VPS_USER }}/keycloak/.env
+          EOF
 
       - name: 🌐 Check and create external network 'web' on VPS
         run: |
@@ -50,7 +50,8 @@ jobs:
       - name: 🐳 Deploy to Docker Swarm
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
-           cd /home/${{ secrets.VPS_USER }}/keycloak
+           cd /home/${{ secrets.VPS_USER }}/traefik
+            set -a; . ./.env; set +a
             docker stack deploy -c docker-compose.yml ${{ secrets.STACK_NAME }}
           EOF
 
