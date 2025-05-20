@@ -27,6 +27,7 @@ jobs:
       - name: 📤 Copy docker-compose.yml to VPS
         run: |
           scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/docker-compose.yml
+          scp -o StrictHostKeyChecking=no realm.json ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/realm.json
 
       # - name: 📝 Create and copy .env file to VPS
       #   run: |
