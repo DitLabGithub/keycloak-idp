@@ -48,6 +48,11 @@ jobs:
             fi
           EOF
 
+      - name: 🔧 Build and Docker image
+        run: |
+          docker build -t keycloak-idp .
+          docker tag keycloak-idp ${{ secrets.DOCKER_IMAGE }}:latest
+
       - name: 🐳 Deploy to Docker Swarm
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} <<EOF
