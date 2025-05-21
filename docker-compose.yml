@@ -3,18 +3,15 @@ services:
     image: postgres:17
     environment:
       POSTGRES_DB: keycloak
-      POSTGRES_USER_FILE: /run/secrets/dbuser
-      POSTGRES_PASSWORD_FILE: /run/secrets/dbpass
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    secrets:
-      - dbuser
-      - dbpass
     networks:
       - web
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    build: .
     volumes:
       - ./realm.json:/opt/keycloak/data/import/realm-export.json
     environment:
@@ -23,21 +20,14 @@ services:
       KC_DB_USERNAME: ${DB_USER}
       KC_DB_PASSWORD: ${DB_PASS}
       KC_HOSTNAME: keycloak.ditlab.cloud
-      KC_ADMIN_HOSTNAME: keycloak.ditlab.cloud
-      KC_PROXY: edge
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_HTTP_RELATIVE_PATH: "/"
+      KEYCLOAK_ADMIN: ${KC_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASS}
       KC_PROXY_HEADERS: xforwarded
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
     depends_on:
       - postgres-idp
-    secrets:
-      - dbuser
-      - dbpass
-      - kcpass
     networks:
       - web
     command: start --import-realm
@@ -59,11 +49,3 @@ networks:
 
 volumes:
   postgres_data:
-
-secrets:
-  dbuser:
-    external: true
-  dbpass:
-    external: true
-  kcpass:
-    external: true
