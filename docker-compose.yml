@@ -11,7 +11,7 @@ services:
       - web
 
   keycloak:
-    image: keycloak-idp
+    image: keycloak-idp:latest
     build: 
       context: .
       dockerfile: dockerfile
@@ -21,8 +21,8 @@ services:
       KC_DB_USERNAME: ${DB_USER}
       KC_DB_PASSWORD: ${DB_PASS}
       KC_HOSTNAME: keycloak.ditlab.cloud
-      KEYCLOAK_ADMIN: ${KC_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASS}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_ADMIN}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASS}
       KC_PROXY_HEADERS: xforwarded
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
