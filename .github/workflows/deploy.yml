@@ -29,7 +29,7 @@ jobs:
           scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/docker-compose.yml
           scp -o StrictHostKeyChecking=no dockerfile ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/dockerfile
           scp -o StrictHostKeyChecking=no realm.json ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/realm.json
-          scp -o StrictHostKeyChecking=no dropdown.ftl ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/dropdown.ftl
+          scp -r -o StrictHostKeyChecking=no ./themes ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/
 
       - name: 📝 Create and copy .env file to VPS
         run: |
