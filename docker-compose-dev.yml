@@ -1,0 +1,44 @@
+services:
+  postgres-idp:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - keycloak-network
+
+  keycloak:
+    image: keycloak-idp:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./themes:/opt/keycloak/themes
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-idp:5432/keycloak
+      KC_DB_USERNAME: ${DB_USER}
+      KC_DB_PASSWORD: ${DB_PASS}
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8080
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_ADMIN}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASS}
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+    depends_on:
+      - postgres-idp
+    ports:
+      - "8080:8080"
+    networks:
+      - keycloak-network
+    command: start-dev --import-realm
+
+networks:
+  keycloak-network:
+
+volumes:
+  postgres_data:

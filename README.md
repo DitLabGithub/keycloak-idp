@@ -18,6 +18,7 @@ These services are deployed using GitHub Actions, which automates the deployment
 - **Automated Deployment**: GitHub Actions workflow for automated deployment to a remote server.
 - **Secure Configuration**: Sensitive information is managed through GitHub Secrets.
 - **Realm Configuration**: Custom realm configuration is baked into the Keycloak Docker image.
+- **Custom Themes**: Includes custom login themes with persona selection dropdown for simplified testing.
 
 ## Configuration
 
@@ -31,11 +32,43 @@ Key environment variables include:
 - Keycloak admin credentials
 - Hostname configuration
 
+### Docker Compose Files
+
+The repository includes two Docker Compose files:
+
+1. **docker-compose.yml**: Used for production deployment with Docker Swarm. This configuration is optimized for security and performance in a production environment.
+
+2. **docker-compose-dev.yml**: Designed for local development and testing. This configuration simplifies the setup process by removing dependencies on external services like Traefik and using more developer-friendly settings.
+
+### Custom Themes
+
+The repository includes custom Keycloak themes in the `themes` directory:
+
+- **dropdown**: A simplified login theme that provides a dropdown menu for selecting predefined personas, making testing and development easier without needing to remember credentials.
+
+To use these themes, they are mounted into the dev Keycloak container and can be selected in the realm settings.
+
 ### realm.json
 
-The `realm.json` file contains the configuration for the Keycloak realm. This file is baked into the Keycloak Docker image during the build process, ensuring that the realm configuration is always available without needing to persist it on the host system.
+The `realm.json` file contains the configuration for the Keycloak realm. This file is baked into the Keycloak Docker image during the build process, ensuring that the realm configuration is always available without needing to persist it on the host system. The realm configuration includes:
+
+- User roles and permissions
+- Client applications
+- Authentication flows
+- Theme settings
+
+The localhost:4200 are enabled. And should be disabled in a real production environment.
 
 ## Deployment Process
+
+### Local Development
+
+For local development:
+`docker-compose -f docker-compose-dev.yml up`
+
+This will start Keycloak and PostgreSQL with development-friendly settings.
+
+### Production Deployment
 
 1. **GitHub Actions Trigger**: The deployment is triggered on pushes to the main branch.
 
@@ -46,7 +79,7 @@ The `realm.json` file contains the configuration for the Keycloak realm. This fi
 
 3. **File Transfer**:
 
-   - `docker-compose.yml`, `Dockerfile`, and `realm.json` are copied to the remote server.
+   - `docker-compose.yml`, `Dockerfile`, `realm.json`, and theme files are copied to the remote server.
    - A `.env` file is created on the remote server using the GitHub Secrets.
 
 4. **Docker Network**:
@@ -83,3 +116,8 @@ After deployment, the repository files are removed from the remote server. Any u
 - Traefik set up as the edge router in the Swarm
 - GitHub repository with appropriate secrets configured
 - SSL certificates for the Keycloak domain
+- Docker and Docker Compose for local development
+
+## Important
+
+Dont forget to disable localhost in realm.json in a production environment.

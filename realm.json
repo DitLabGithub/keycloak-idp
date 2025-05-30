@@ -1,5 +1,8 @@
 {
   "realm": "dtlbrealm",
+  "loginTheme": "dropdown",
+  "accountTheme": "keycloak",
+  "adminTheme": "keycloak",
   "enabled": true,
   "clients": [
     {
@@ -9,11 +12,13 @@
       "publicClient": true,
       "redirectUris": [
         "https://eduwallet.ditlab.cloud/*",
-        "https://www.keycloak.org/app/*"
+        "https://www.keycloak.org/app/*",
+        "http://localhost:4200/*"
       ],
       "webOrigins": [
         "https://eduwallet.ditlab.cloud",
-        "https://www.keycloak.org"
+        "https://www.keycloak.org",
+        "http://localhost:4200"
       ],
       "directAccessGrantsEnabled": true,
       "standardFlowEnabled": true,
@@ -23,7 +28,7 @@
   ],
   "users": [
     {
-      "username": "reimer",
+      "username": "Reimer",
       "enabled": true,
       "emailVerified": true,
       "firstName": "Reimer the face",
@@ -34,6 +39,22 @@
         {
           "type": "password",
           "value": "password123",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "username": "Remkoe",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Remkoe de Tauren",
+      "lastName": "Wachtenmaar",
+      "email": "testuser2@example.com",
+      "createdTimestamp": 1715731200000,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "IkBenGeenTauren",
           "temporary": false
         }
       ]
