@@ -12,14 +12,9 @@
       "publicClient": true,
       "redirectUris": [
         "https://eduwallet.ditlab.cloud/*",
-        "https://www.keycloak.org/app/*",
         "http://localhost:4200/*"
       ],
-      "webOrigins": [
-        "https://eduwallet.ditlab.cloud",
-        "https://www.keycloak.org",
-        "http://localhost:4200"
-      ],
+      "webOrigins": ["https://eduwallet.ditlab.cloud", "http://localhost:4200"],
       "directAccessGrantsEnabled": true,
       "standardFlowEnabled": true,
       "implicitFlowEnabled": false,
