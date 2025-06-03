@@ -26,7 +26,7 @@
       "username": "Reimer",
       "enabled": true,
       "emailVerified": true,
-      "firstName": "Reimer the face",
+      "firstName": "Reimer",
       "lastName": "Wachtenmaar",
       "email": "testuser@example.com",
       "createdTimestamp": 1715731200000,
@@ -39,11 +39,11 @@
       ]
     },
     {
-      "username": "Remkoe",
+      "username": "Remco",
       "enabled": true,
       "emailVerified": true,
-      "firstName": "Remkoe de Tauren",
-      "lastName": "Wachtenmaar",
+      "firstName": "Remco",
+      "lastName": "Wijink",
       "email": "testuser2@example.com",
       "createdTimestamp": 1715731200000,
       "credentials": [

@@ -37,7 +37,7 @@
                     <select id="persona-dropdown" class="form-control">
                         <option value="">-- Choose Persona --</option>
                         <option value="Reimer">Reimer (Face)</option>
-                        <option value="Remkoe">Remco (Koe)</option>
+                        <option value="Remco">Remco (The long fella)</option>
                     </select>
                 </div>
 
@@ -54,7 +54,7 @@
     <script>
         const personas = {
             Reimer: { username: 'Reimer', password: 'password123' },
-            Remkoe: { username: 'Remkoe', password: 'IkBenGeenTauren' }
+            Remco: { username: 'Remco', password: 'IkBenGeenTauren' }
         };
 
         function fillAndSubmit() {
