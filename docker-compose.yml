@@ -11,7 +11,7 @@ services:
       - web
 
   keycloak:
-    image: keycloak-idp:latest
+    image: keycloak-dtlb:${VERSION}
     build: 
       context: .
       dockerfile: dockerfile
