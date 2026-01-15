@@ -23,6 +23,7 @@ services:
       KC_HOSTNAME: keycloak.ditlab.cloud
       KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_ADMIN}
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_ADMIN_PASS}
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
       KC_PROXY_HEADERS: xforwarded
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME_STRICT: "false"
@@ -31,7 +32,7 @@ services:
       - postgres-idp
     networks:
       - web
-    command: start --import-realm --features=passkeys
+    command: start --import-realm --feature-dpop=disabled --features=passkeys
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
