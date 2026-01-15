@@ -36,8 +36,8 @@
                 <div class="form-group">
                     <select id="persona-dropdown" class="form-control">
                         <option value="">-- Choose Persona --</option>
-                        <option value="Reimer">Reimer (Face)</option>
-                        <option value="Remco">Remco (The long fella)</option>
+                        <option value="Teimer">Teimer (Face)</option>
+                        <option value="Femco">Femco (The long fella)</option>
                     </select>
                 </div>
 
@@ -53,8 +53,8 @@
 
     <script>
         const personas = {
-            Reimer: { username: 'Reimer', password: 'password123' },
-            Remco: { username: 'Remco', password: 'IkBenGeenTauren' }
+            Teimer: { username: 'Teimer', password: 'password123' },
+            Femco: { username: 'Femco', password: 'IkBenGeenTauren' }
         };
 
         function fillAndSubmit() {

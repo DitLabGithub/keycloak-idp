@@ -23,10 +23,10 @@
   ],
   "users": [
     {
-      "username": "Reimer",
+      "username": "Teimer",
       "enabled": true,
       "emailVerified": true,
-      "firstName": "Reimer",
+      "firstName": "Teimer",
       "lastName": "Wachtenmaar",
       "email": "testuser@example.com",
       "createdTimestamp": 1715731200000,
@@ -39,7 +39,7 @@
       ]
     },
     {
-      "username": "Remco",
+      "username": "Femco",
       "enabled": true,
       "emailVerified": true,
       "firstName": "Remco",
