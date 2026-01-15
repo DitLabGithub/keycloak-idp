@@ -26,11 +26,11 @@ jobs:
             mkdir -p /home/${{ secrets.VPS_USER }}/keycloak
           EOF
 
-      - name: 📤 Copy docker-compose.yml, dockerfile, login theme and realm.json to VPS
+      - name: 📤 Copy docker-compose.yml, dockerfile, login theme and data-import to VPS
         run: |
           scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/docker-compose.yml
           scp -o StrictHostKeyChecking=no dockerfile ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/dockerfile
-          scp -f -o StrictHostKeyChecking=no ./data-import ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/
+          scp -r -o StrictHostKeyChecking=no ./data-import ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/
           scp -r -o StrictHostKeyChecking=no ./themes ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/home/${{ secrets.VPS_USER }}/keycloak/
 
       - name: 📝 Create and copy .env file to VPS
