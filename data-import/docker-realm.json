@@ -1,0 +1,33 @@
+{
+  "id": "ditlab-realm",
+  "realm": "ditlab-realm",
+  "displayName": "Ditlab Docker Realm",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "registry.ditlab.cloud",
+      "name": "Docker Registry Client",
+      "description": "Client for authenticating Docker CLI requests to the registry",
+      "protocol": "docker-v2",
+      "enabled": true,
+      "publicClient": true,
+      "fullScopeAllowed": true
+    }
+  ],
+  "users": [
+    {
+      "username": "docker-admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Docker",
+      "lastName": "Admin",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "changeme123!",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}
