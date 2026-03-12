@@ -31,7 +31,7 @@ services:
       - postgres-idp
     networks:
       - web
-    command: start --import-realm --feature-dpop=disabled --features=passkeys
+    command: start --import-realm --feature-dpop=disabled --features=passkeys,docker
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.rule=Host(`keycloak.ditlab.cloud`)"
