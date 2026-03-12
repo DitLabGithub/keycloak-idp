@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:latest
+FROM quay.io/keycloak/keycloak:24.0.5
 
 # Copy the realm.json file into the image
 COPY data-import/ /opt/keycloak/data/import/
