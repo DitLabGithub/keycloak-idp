@@ -1,6 +1,6 @@
 {
-  "id": "ditlab-realm",
-  "realm": "ditlab-realm",
+  "id": "docker-registry",
+  "realm": "docker-registry",
   "displayName": "Ditlab Docker Realm",
   "enabled": true,
   "clients": [
