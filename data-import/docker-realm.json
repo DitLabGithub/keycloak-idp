@@ -13,21 +13,5 @@
       "publicClient": true,
       "fullScopeAllowed": true
     }
-  ],
-  "users": [
-    {
-      "username": "docker-admin",
-      "enabled": true,
-      "emailVerified": true,
-      "firstName": "Docker",
-      "lastName": "Admin",
-      "credentials": [
-        {
-          "type": "password",
-          "value": "changeme123!",
-          "temporary": false
-        }
-      ]
-    }
   ]
 }
